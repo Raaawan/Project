@@ -2,18 +2,22 @@
 
 namespace Demo.DataAccessLayer.Data.Contexts
 {
-    internal class ApplicationDbContext:DbContext
+    public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : DbContext(options)
     {
+
+        //#region Constructor with application dbcontext
+        //#endregion
+
         #region Properties
-        protected DbSet<Department> Departments { get; set; }
-        #endregion
+        public DbSet<Department> Departments { get; set; }
+        #endregion 
 
         #region onConfigure Method
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            //base.OnConfiguring(optionsBuilder);
-            optionsBuilder.UseSqlServer("ConnectionString");
-        }
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    //base.OnConfiguring(optionsBuilder);
+        //    optionsBuilder.UseSqlServer("ConnectionString");
+        //}
 
         #endregion
 
@@ -25,5 +29,7 @@ namespace Demo.DataAccessLayer.Data.Contexts
             //modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly); 
         }
         #endregion
+
+
     }
 }
