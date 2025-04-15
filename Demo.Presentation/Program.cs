@@ -18,6 +18,8 @@ namespace Demo.Presentation
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefultConnection"));
 
             });
+            builder.Services.AddScoped<IDepartmentRepository,DepartmentRepository>();
+
             #endregion
             var app = builder.Build();
 
