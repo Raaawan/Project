@@ -1,3 +1,4 @@
+using Demo.BusinessLogic.Services;
 using Demo.DataAccessLayer.Data.Contexts;
 using Demo.DataAccessLayer.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -19,11 +20,20 @@ namespace Demo.Presentation
 
             });
             builder.Services.AddScoped<IDepartmentRepository,DepartmentRepository>();
+            builder.Services.AddScoped<IDepartmentServce, DepartmentServce>();
 
             #endregion
             var app = builder.Build();
+            #region Configure HTTP request pipeLine 
+            app.UseStaticFiles();
+            app.UseRouting();
+            //app.UseAuthorization();
+            app.MapControllerRoute(
+                name: "default",
+                pattern: "{controller=Home}/{action=Index}/{id?}"
+                );
+            #endregion
 
-              
 
             app.Run();
         }

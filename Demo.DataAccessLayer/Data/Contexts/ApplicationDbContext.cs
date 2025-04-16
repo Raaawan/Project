@@ -12,14 +12,14 @@ namespace Demo.DataAccessLayer.Data.Contexts
         public DbSet<Department> Departments { get; set; }
         #endregion 
 
-        #region onConfigure Method
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    //base.OnConfiguring(optionsBuilder);
-        //    optionsBuilder.UseSqlServer("ConnectionString");
-        //}
+        //#region onConfigure Method
+        ////protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        ////{
+        ////    //base.OnConfiguring(optionsBuilder);
+        ////    optionsBuilder.UseSqlServer("ConnectionString");
+        ////}
 
-        #endregion
+        //#endregion
 
         #region OnCreating Method
         protected override void OnModelCreating(ModelBuilder modelBuilder)
