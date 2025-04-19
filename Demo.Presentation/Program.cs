@@ -27,7 +27,7 @@ namespace Demo.Presentation
             #region Configure HTTP request pipeLine 
             app.UseStaticFiles();
             app.UseRouting();
-            //app.UseAuthorization();
+            app.UseAuthorization();
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}"
