@@ -60,5 +60,21 @@ namespace Demo.Presentation.Controllers
             }
         }
         #endregion
+
+        #region Details Actions
+        public IActionResult Details(int? id)
+        {
+            if (!id.HasValue)
+                return BadRequest();
+            else
+            {
+                var department = _departmentServce.GetDepartmentById(id.Value);
+                if (department is null)
+                    return NotFound();
+                else
+                    return View(department);
+            }
+        }
+        #endregion
     }
 }
