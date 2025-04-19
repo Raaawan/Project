@@ -1,15 +1,64 @@
-﻿using Demo.BusinessLogic.Services;
+﻿using Demo.BusinessLogic.DataTransferObjescts;
+using Demo.BusinessLogic.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Demo.Presentation.Controllers
 {
-    public class DepartmentController(IDepartmentServce _departmentServce) : Controller
+    public class DepartmentController(IDepartmentServce _departmentServce,ILogger<DepartmentController> _logger,IWebHostEnvironment _environment) : Controller
     {
+        #region Index Action
         public IActionResult Index()
         {
             var Departments = _departmentServce.GetAllDepartments();
 
             return View(Departments);
         }
+        #endregion
+
+        #region Create Actions
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Create(CreatedDepartmentDto departmentDto)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    int Result = _departmentServce.AddDepartment(departmentDto);
+                    if (Result > 0)
+                    {
+                        //return View(nameof(Index));
+                        return RedirectToAction(nameof(Index));
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(String.Empty, "can not be empty");
+                        return View(departmentDto);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    if (_environment.IsDevelopment())
+                    {
+                        ModelState.AddModelError(String.Empty, "can not be empty");
+                        return View(departmentDto);
+                    }
+                    else
+                    {
+                        _logger.LogError(ex.Message);
+                        return View(departmentDto);
+                    }
+                } 
+            }
+            else
+            {
+                return View(departmentDto);
+            }
+        }
+        #endregion
     }
 }
