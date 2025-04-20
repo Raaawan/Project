@@ -9,7 +9,7 @@ namespace Demo.DataAccessLayer.Data.Configurations
 {
     public class EmployeeConfigurations : BaseEntityConfigurations<Employees>, IEntityTypeConfiguration<Employees>
     {
-        public void Configure(EntityTypeBuilder<Employees> builder)
+        public new void Configure(EntityTypeBuilder<Employees> builder)
         {
             builder.Property(E => E.Name).HasColumnType("varchar(50)");
             builder.Property(E => E.Address).HasColumnType("varchar(150)");

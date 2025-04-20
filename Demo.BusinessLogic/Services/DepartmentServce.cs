@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Demo.BusinessLogic.DataTransferObjescts;
 using Demo.BusinessLogic.Factories;
 using Demo.DataAccessLayer.Models;
-using Demo.DataAccessLayer.Repositories;
+using Demo.DataAccessLayer.Repositories.Interfaces;
 
 namespace Demo.BusinessLogic.Services
 {
