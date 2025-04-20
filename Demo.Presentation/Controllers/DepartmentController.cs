@@ -1,5 +1,7 @@
 ﻿using Demo.BusinessLogic.DataTransferObjescts;
 using Demo.BusinessLogic.Services;
+using Demo.Presentation.ViewModels;
+using Demo.Presentation.ViewModels.DepartmentViewModel;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Demo.Presentation.Controllers
@@ -74,6 +76,64 @@ namespace Demo.Presentation.Controllers
                 else
                     return View(department);
             }
+        }
+        #endregion
+
+        #region Edit Actions
+        [HttpGet]
+        public IActionResult Edit(int? id) { 
+            if(!id.HasValue)
+                return BadRequest();
+            var department = _departmentServce.GetDepartmentById(id.Value);
+            if(department is null)
+                return NotFound();
+            var departmentViewModel = new DepartmentEditViewModel()
+            {
+                Name = department.Name,
+                Code = department.Code,
+                Description = department.Description,
+                DateCreation = department.CreatedOn
+            };
+            return View(departmentViewModel);
+        }
+
+        [HttpPost]
+        public IActionResult Edit([FromRoute] int id, DepartmentEditViewModel viewModel) {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var updatedDepartment = new UpdatedDepartmentDto()
+                    {
+                        Id = id,
+                        Name = viewModel.Name,
+                        Code = viewModel.Code,
+                        Description = viewModel.Description,
+                        DateOfCreation = viewModel.DateCreation
+                    };
+                    int Result = _departmentServce.UpdateDepartment(updatedDepartment);
+                    if (Result > 0)
+                        return RedirectToAction(nameof(Index));
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, "Department can not be updated");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    if (_environment.IsDevelopment())
+                    {
+                        ModelState.AddModelError(String.Empty, "can not be empty");
+                    }
+                    else
+                    {
+                        _logger.LogError(ex.Message);
+                        return View("ErrorView",ex);
+                    }
+                }
+
+            }
+            return View(viewModel);
         }
         #endregion
     }
