@@ -1,4 +1,6 @@
 ﻿
+using Demo.DataAccessLayer.Models.DepartmentModel;
+
 namespace Demo.DataAccessLayer.Repositories
 {
     public interface IDepartmentRepository
