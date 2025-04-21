@@ -1,6 +1,7 @@
 using Demo.BusinessLogic.Services;
 using Demo.DataAccessLayer.Data.Contexts;
-using Demo.DataAccessLayer.Repositories;
+using Demo.DataAccessLayer.Repositories.Classes;
+using Demo.DataAccessLayer.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace Demo.Presentation
@@ -16,7 +17,7 @@ namespace Demo.Presentation
             //builder.Services.AddScoped<ApplicationDbContext>();
             builder.Services.AddDbContext<ApplicationDbContext>(options => {
                 //options.UseSqlServer(builder.Configuration["ConnectionString:DefaultConnection"]);
-                options.UseSqlServer(builder.Configuration.GetConnectionString("DefultConnection"));
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 
             });
             builder.Services.AddScoped<IDepartmentRepository,DepartmentRepository>();
@@ -27,7 +28,7 @@ namespace Demo.Presentation
             #region Configure HTTP request pipeLine 
             app.UseStaticFiles();
             app.UseRouting();
-            //app.UseAuthorization();
+            app.UseAuthorization();
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}"

@@ -9,17 +9,6 @@ namespace Demo.BusinessLogic.DataTransferObjescts
 {
     public class DepartmentDetailsDto
     {
-        //public DepartmentDetailsDto(Department departments)
-        //{
-        //    Id = derpartments.Id,
-        //    Name = derpartments.Name,
-        //    Code = derpartments.Code,
-        //    Description = derpartments.Description,
-        //    CreatedOn = DateOnly.FromDateTime(derpartments.CreatedOn),
-        //    CreatedBy = derpartments.CreatedBy,
-        //    LastModifiedBy = derpartments.LastModifiedBy,
-        //    IsDeleted = derpartments.IsDeleted,
-        //}
         public int Id { get; set; }
         public int CreatedBy { get; set; }
         public DateOnly CreatedOn { get; set; }
