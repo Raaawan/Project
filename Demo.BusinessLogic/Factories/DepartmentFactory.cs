@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Demo.BusinessLogic.DataTransferObjescts;
+using Demo.BusinessLogic.DataTransferObjescts.DepartmentDtos;
 using Demo.DataAccessLayer.Models.DepartmentModel;
 
 namespace Demo.BusinessLogic.Factories

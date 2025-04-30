@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Demo.BusinessLogic.DataTransferObjescts;
+using Demo.BusinessLogic.DataTransferObjescts.DepartmentDtos;
 using Demo.BusinessLogic.Factories;
+using Demo.BusinessLogic.Services.Interfaces;
 using Demo.DataAccessLayer.Models;
 using Demo.DataAccessLayer.Repositories.Interfaces;
 
-namespace Demo.BusinessLogic.Services
+namespace Demo.BusinessLogic.Services.Classes
 {
     public class DepartmentServce(IDepartmentRepository _departmentRepository) : IDepartmentServce
     {

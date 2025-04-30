@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Demo.BusinessLogic.DataTransferObjescts;
+using Demo.BusinessLogic.DataTransferObjescts.EmployeeDtos;
 using Demo.DataAccessLayer.Models.DepartmentModel;
 using Demo.DataAccessLayer.Models.EmployeeModel;
 
