@@ -16,12 +16,12 @@ namespace Demo.BusinessLogic.Factories
         {
             return new EmployeeDto()
             {
-                EmpId = E.Id,
+                Id = E.Id,
                 Name = E.Name,
                 Age = E.Age,
                 Email = E.Email,
-                Gender = E.Gender,
-                EmployeeType = E.EmployeeType,
+                Gender = E.Gender.ToString(),
+                EmployeeType = E.EmployeeType.ToString(),
                 Salary= E.Salary,
             };
         }
@@ -33,12 +33,12 @@ namespace Demo.BusinessLogic.Factories
         {
             return new EmployeeDetailsDto()
             {
-                EmpId = E.Id,
+                Id = E.Id,
                 Name = E.Name,
                 Age = E.Age,
                 Email = E.Email,
-                Gender = E.Gender,
-                EmployeeType = E.EmployeeType,
+                Gender = E.Gender.ToString(),
+                EmployeeType = E.EmployeeType.ToString(),
                 Salary = E.Salary,
             };
 
@@ -51,11 +51,10 @@ namespace Demo.BusinessLogic.Factories
             return new Employees()
             {
                 Name = EmployeeDto.Name,
-                Age=EmployeeDto.Age,
+                Age=EmployeeDto.Age ?? 0,
                 Email = EmployeeDto.Email,
                 Gender = EmployeeDto.Gender,
                 EmployeeType = EmployeeDto.EmployeeType,
-                CreatedOn = EmployeeDto.DateOfCreation.ToDateTime(new TimeOnly())
             };
         }
 
@@ -67,7 +66,7 @@ namespace Demo.BusinessLogic.Factories
             return new Employees()
             {
                 Name = employeeDto.Name,
-                Age = employeeDto.Age,
+                Age = employeeDto.Age ?? 0,
                 Email = employeeDto.Email,
                 Gender = employeeDto.Gender,
                 EmployeeType = employeeDto.EmployeeType,
