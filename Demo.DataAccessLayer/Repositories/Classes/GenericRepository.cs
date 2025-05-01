@@ -34,7 +34,7 @@ namespace Demo.DataAccessLayer.Repositories.Classes
         }
         #endregion
 
-        #region Update Dept
+        #region Update 
         public int Update(TEntity entity)
         {
             _dbContext.Set<TEntity>().Update(entity);
@@ -42,7 +42,7 @@ namespace Demo.DataAccessLayer.Repositories.Classes
         }
         #endregion
 
-        #region Delete Dept
+        #region Delete
         public int Remove(TEntity entity)
         {
             _dbContext.Set<TEntity>().Remove(entity);
@@ -50,11 +50,25 @@ namespace Demo.DataAccessLayer.Repositories.Classes
         }
         #endregion
 
-        #region Add Dept  
+        #region Add   
         public int Add(TEntity entity)
         {
             _dbContext.Set<TEntity>().Add(entity);
             return _dbContext.SaveChanges();
+        }
+
+
+        #endregion
+
+        #region Difference between IEnumerable and IQueryable
+        public IEnumerable<TEntity> GetIEnumerable()
+        {
+            return _dbContext.Set<TEntity>();
+        }
+
+        public IQueryable<TEntity> GetQueryable()
+        {
+            return _dbContext.Set<TEntity>();
         }
         #endregion
     }

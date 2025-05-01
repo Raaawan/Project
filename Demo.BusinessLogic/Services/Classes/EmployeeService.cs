@@ -18,7 +18,7 @@ namespace Demo.BusinessLogic.Services.Classes
     public class EmployeeService(IEmployeeRepository _employeeRepository,IMapper _mapper) : IEmployeeService
     {
         #region Get All Employees
-        public IEnumerable<EmployeeDto> GetAllEmployees(bool WithTracking=false)
+        public IEnumerable<EmployeeDto> GetAllEmployees(bool WithTracking = false)
         {
             var Employees = _employeeRepository.GetAll(WithTracking);
             //Manual mapping 
@@ -105,6 +105,31 @@ namespace Demo.BusinessLogic.Services.Classes
         }
         #endregion
 
-
+        #region Difference between IEnumerable and IQueryable
+        //public IEnumerable<EmployeeDto> GetAllEmployees(bool WithTracking = false)
+        //{
+        //    var result = _employeeRepository.GetIEnumerable()
+        //        .Where(E => E.IsDeleted != true)
+        //        .Select(E => new EmployeeDto()
+        //        {
+        //            Id = E.Id,
+        //            Name = E.Name,
+        //            Age = E.Age,
+        //        });
+        //    return result.ToList();
+        //}
+        //public IEnumerable<EmployeeDto> GetAllEmployees(bool WithTracking = false)
+        //{
+        //    var result = _employeeRepository.GetQueryable()
+        //        .Where(E => E.IsDeleted != true)
+        //        .Select(E => new EmployeeDto()
+        //        {
+        //            Id = E.Id,
+        //            Name = E.Name,
+        //            Age = E.Age,
+        //        });
+        //    return result.ToList();
+        //}
+        #endregion
     }
 }
