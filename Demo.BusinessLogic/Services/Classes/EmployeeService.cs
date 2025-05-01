@@ -4,34 +4,37 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using Demo.BusinessLogic.DataTransferObjescts.DepartmentDtos;
 using Demo.BusinessLogic.DataTransferObjescts.EmployeeDtos;
 using Demo.BusinessLogic.Factories;
 using Demo.BusinessLogic.Services.Interfaces;
+using Demo.DataAccessLayer.Models.EmployeeModel;
 using Demo.DataAccessLayer.Repositories.Classes;
 using Demo.DataAccessLayer.Repositories.Interfaces;
 
 namespace Demo.BusinessLogic.Services.Classes
 {
-    public class EmployeeService(IEmployeeRepository _employeeRepository) : IEmployeeService
+    public class EmployeeService(IEmployeeRepository _employeeRepository,IMapper _mapper) : IEmployeeService
     {
         #region Get All Employees
         public IEnumerable<EmployeeDto> GetAllEmployees(bool WithTracking=false)
         {
             var Employees = _employeeRepository.GetAll(WithTracking);
             //Manual mapping 
-            var employeeDtp = Employees.Select(emp => new EmployeeDto()
-            {
-                Id = emp.Id,
-                Name = emp.Name,
-                Age = emp.Age,
-                Email = emp.Email,
-                IsActive = emp.IsActive,
-                Salary = emp.Salary,
-                EmployeeType=emp.EmployeeType.ToString(),
-                Gender=emp.Gender.ToString(),
-            });
-            return employeeDtp;
+            //var employeeDto = Employees.Select(emp => new EmployeeDto()
+            //{
+            //    Id = emp.Id,
+            //    Name = emp.Name,
+            //    Age = emp.Age,
+            //    Email = emp.Email,
+            //    IsActive = emp.IsActive,
+            //    Salary = emp.Salary,
+            //    EmployeeType=emp.EmployeeType.ToString(),
+            //    Gender=emp.Gender.ToString(),
+            //});
+            var employeeDto = _mapper.Map<IEnumerable<Employees>, IEnumerable<EmployeeDto>>(Employees);
+            return employeeDto;
         }
         #endregion
 
@@ -39,47 +42,69 @@ namespace Demo.BusinessLogic.Services.Classes
         public EmployeeDetailsDto? GetEmployeeById(int id)
         {
             var employee = _employeeRepository.GetById(id);
-            if (employee == null)
+            //if (employee == null)
+            //{
+            //    return null;
+            //}
+            //else
+            //{
+            //    return new EmployeeDetailsDto()
+            //    {
+            //        Id = employee.Id,
+            //        Name = employee.Name,
+            //        Salary = employee.Salary,
+            //        Address = employee.Address,
+            //        Age = employee.Age,
+            //        Email = employee.Email,
+            //        HiringDate = DateOnly.FromDateTime(employee.HiringDate),
+            //        IsActive = employee.IsActive,
+            //        PhoneNumber = employee.PhoneNumber,
+            //        EmployeeType = employee.EmployeeType.ToString(),
+            //        Gender = employee.Gender.ToString(),
+            //        CreatedBy = 1,
+            //        CreatedOn=(DateTime)employee.CreatedOn,
+            //        LastModifiedBy=1,
+            //        LastModifiedOn=(DateTime)employee.LastModifiedOn,
+
+            //    };
+
+            //}
+            return employee is null ? null : _mapper.Map<Employees,EmployeeDetailsDto>(employee);
+        }
+        #endregion
+
+        #region Create employee
+        public int CreateEmployee(CreatedEmployeeDto employeeDto)
+        {
+            var employee = _mapper.Map<CreatedEmployeeDto, Employees>(employeeDto);
+            return _employeeRepository.Add(employee);
+        }
+
+        #endregion
+
+        #region Update Employee
+        public int UpdateEmployee(UpdatedEmployeeDto employeeDto)
+        {
+            return _employeeRepository.Update(_mapper.Map<UpdatedEmployeeDto,Employees>(employeeDto));
+        }
+        #endregion
+
+        #region Delete Employee
+        public bool DeleteEmployee(int id)
+        {
+            var employee = _employeeRepository.GetById(id);
+            if(employee is null)
             {
-                return null;
+                return false;
             }
             else
             {
-                return new EmployeeDetailsDto()
-                {
-                    Id = employee.Id,
-                    Name = employee.Name,
-                    Salary = employee.Salary,
-                    Address = employee.Address,
-                    Age = employee.Age,
-                    Email = employee.Email,
-                    HiringDate = DateOnly.FromDateTime(employee.HiringDate),
-                    IsActive = employee.IsActive,
-                    PhoneNumber = employee.PhoneNumber,
-                    EmployeeType = employee.EmployeeType.ToString(),
-                    Gender = employee.Gender.ToString(),
-                    CreatedBy = 1,
-                    CreatedOn=(DateTime)employee.CreatedOn,
-                    LastModifiedBy=1,
-                    LastModifiedOn=(DateTime)employee.LastModifiedOn,
-
-                };
-
+                employee.IsDeleted = true;
+                return _employeeRepository.Update(employee) > 0 ? true : false;
             }
         }
         #endregion
-        public int CreateEmployee(CreatedEmployeeDto employeeDto)
-        {
-            throw new NotImplementedException();
-        }
 
-        public bool DeleteEmployee(int id)
-        {
-            throw new NotImplementedException();
-        }
-        public int UpdateEmployee(UpdatedEmployeeDto employeeDto)
-        {
-            throw new NotImplementedException();
-        }
+
     }
 }
